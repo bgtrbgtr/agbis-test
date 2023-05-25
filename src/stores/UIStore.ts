@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class UIStore {
   isModalOpen = false;
   errorMessage = "";
+  filterSelection = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -14,9 +15,14 @@ class UIStore {
 
   setErrorMessage(message: string) {
     this.errorMessage = message;
-    setTimeout(() => {
-      this.errorMessage = "";
-    }, 4000);
+  }
+
+  setFilterSelection(value: string) {
+    this.filterSelection = value;
+  }
+
+  clearErrorMessage() {
+    this.errorMessage = "";
   }
 }
 

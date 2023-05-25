@@ -2,6 +2,7 @@ import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import store from "../stores/TodoStore.ts";
 import uiStore from "../stores/UIStore.ts";
+import loclzStore from "../stores/LocalizationStore.ts";
 
 const Modal = () => {
   const todoInEdit = store.todoInEdit;
@@ -9,14 +10,17 @@ const Modal = () => {
   return (
     <>
       {uiStore.isModalOpen ? (
-        <div className="absolute left-0 top-0 z-10 h-full w-screen bg-black/50">
-          <div className="flex h-screen items-center">
+        <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/50">
+          <div className="flex h-full items-center">
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="mx-auto my-auto flex h-2/5 w-1/2 flex-col rounded-md bg-gray-200 p-3"
+              className="mx-auto my-auto flex h-[400px] w-10/12 flex-col rounded-md bg-gray-200 p-3 md:w-8/12 lg:w-8/12"
             >
               <button
                 className="ml-auto w-5"
+                aria-label={`${loclzStore.setTranslation(
+                  "ariaLabels.closeModal"
+                )}`}
                 type="button"
                 onClick={() => {
                   uiStore.openModal();
@@ -24,9 +28,13 @@ const Modal = () => {
               >
                 <img className="h-5 w-5" src="/src/assets/close.svg"></img>
               </button>
-              <label className="text font-light">New title:</label>
+              <label className="text font-light">{`${loclzStore.setTranslation(
+                "labels.inputTitle"
+              )}`}</label>
               <input
-                placeholder="Title"
+                placeholder={`${loclzStore.setTranslation(
+                  "placeholders.newTitle"
+                )}`}
                 value={todoInEdit.title}
                 onChange={(e) =>
                   todoInEdit
@@ -37,9 +45,13 @@ const Modal = () => {
                 }
                 className="mb-2 rounded-md p-1 text-sm outline-none placeholder:font-thin placeholder:text-gray-600"
               ></input>
-              <label className="text font-light">New description:</label>
+              <label className="text font-light">{`${loclzStore.setTranslation(
+                "labels.inputDescription"
+              )}`}</label>
               <textarea
-                placeholder="Brief description"
+                placeholder={`${loclzStore.setTranslation(
+                  "placeholders.newDescription"
+                )}`}
                 value={todoInEdit.description}
                 onChange={(e) =>
                   todoInEdit
@@ -52,13 +64,16 @@ const Modal = () => {
               ></textarea>
               <button
                 type="button"
+                aria-label={`${loclzStore.setTranslation(
+                  "ariaLabels.saveModal"
+                )}`}
                 onClick={(e) => {
                   e.preventDefault();
                   store.saveChanges();
                 }}
-                className="w-1/6 self-center rounded-md bg-white p-2 text-xs font-thin hover:bg-blue-600 hover:text-white active:bg-blue-700"
+                className="w-3/6 self-center rounded-md bg-white p-2 text-xs font-thin hover:bg-blue-600 hover:text-white active:bg-blue-700 sm:w-1/6 lg:w-2/6"
               >
-                Save
+                {`${loclzStore.setTranslation("buttons.saveModal")}`}
               </button>
             </form>
           </div>

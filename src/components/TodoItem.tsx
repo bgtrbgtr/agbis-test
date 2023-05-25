@@ -22,14 +22,14 @@ const TodoItem = (props: TodoItemProps) => {
         onClick={() => store.putOnDetailedView(todo)}
         className={`${
           todo.completed ? "text-gray-200" : ""
-        } text-middle w-full min-w-fit font-medium hover:cursor-pointer`}
+        } text-middle w-fit max-w-full truncate font-medium hover:cursor-pointer hover:font-semibold`}
       >
         {todo.title}
       </p>
       <p
         className={`${
           todo.completed ? "text-gray-200" : ""
-        } mb-2 max-h-12 w-full overflow-y-hidden whitespace-pre-wrap break-words font-light`}
+        } mb-2 h-10 max-h-20 w-full truncate break-words  font-light`}
       >
         {todo.description}
       </p>

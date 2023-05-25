@@ -1,27 +1,38 @@
 import { observer } from "mobx-react-lite";
+import loclzStore from "../stores/LocalizationStore";
 import { FilterSelect, TodoCounter } from ".";
 
 const Header = () => {
   return (
-    <div className="col-span-2 flex max-h-20 justify-start">
-      <h1 className="text-3xl font-extralight text-white">To Do List</h1>
+    <header className="grid-rows-auto mt-6 grid max-h-20 grid-cols-2 justify-start sm:col-span-2 sm:flex sm:flex-row">
+      <h1 className="text-3xl font-extralight text-white">{`${loclzStore.setTranslation(
+        "titles.main"
+      )}`}</h1>
       <TodoCounter />
       <FilterSelect />
       <div className="ml-auto flex gap-1 align-top text-sm">
         <button
           type="button"
-          className="active:black text-2xl font-light text-white hover:font-black"
+          aria-label={`${loclzStore.setTranslation("ariaLabels.setEnglish")}`}
+          className={`active:black text-2xl ${
+            loclzStore.language === "EN" ? "font-black" : "font-light"
+          } text-white hover:font-black`}
+          onClick={() => loclzStore.setLanguage("EN")}
         >
           En
         </button>
         <button
           type="button"
-          className="active:black text-2xl font-light text-white hover:font-black"
+          aria-label={`${loclzStore.setTranslation("ariaLabels.setRussian")}`}
+          className={`active:black text-2xl ${
+            loclzStore.language === "RU" ? "font-black" : "font-light"
+          } text-white hover:font-black`}
+          onClick={() => loclzStore.setLanguage("RU")}
         >
           Ru
         </button>
       </div>
-    </div>
+    </header>
   );
 };
 

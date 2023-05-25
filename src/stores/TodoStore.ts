@@ -8,6 +8,7 @@ export interface Todo {
   title: string;
   description: string;
   isDetailed: boolean;
+  isDisplayed: boolean;
 }
 
 export interface NewTodo {
@@ -24,6 +25,7 @@ const addTodo = (todos: Todo[], newTodo: NewTodo): Todo[] => [
     description: newTodo.description,
     completed: false,
     isDetailed: false,
+    isDisplayed: uiStore.filterSelection === "Completed" ? false : true, //add condition to prevent new todo from displaying when filter is on
   },
 ];
 
@@ -31,8 +33,15 @@ const removeTodo = (todos: Todo[], id: number): Todo[] => {
   return todos.filter((todo) => todo.id !== id);
 };
 
-const filterList = (todos: Todo[], completed: boolean): Todo[] => {
-  return todos.filter((todo) => todo.completed === completed);
+const handleFilterList = (todos: Todo[], completed: boolean): Todo[] => {
+  return todos.map((todo) => {
+    if (todo.completed === completed) {
+      todo.isDisplayed = true;
+    } else {
+      todo.isDisplayed = false;
+    }
+    return todo;
+  });
 };
 
 // Mobx store and actions:
@@ -45,8 +54,8 @@ class TodoStore {
     description: "",
     completed: false,
     isDetailed: false,
+    isDisplayed: true,
   };
-  unfilteredList: Todo[] = [...this.todos];
 
   constructor() {
     makeAutoObservable(this);
@@ -54,7 +63,6 @@ class TodoStore {
 
   addTodo() {
     this.todos = addTodo(this.todos, this.newTodo);
-    this.unfilteredList = [...this.todos];
     this.newTodo = { title: "", description: "" };
   }
 
@@ -68,7 +76,6 @@ class TodoStore {
       if (todo.id === this.todoInEdit.id) {
         todo.title = this.todoInEdit.title;
         todo.description = this.todoInEdit.description;
-        this.unfilteredList = [...this.todos];
       } else {
         return todo;
       }
@@ -78,7 +85,6 @@ class TodoStore {
 
   removeTodo(id: number) {
     this.todos = removeTodo(this.todos, id);
-    this.unfilteredList = [...this.todos];
   }
 
   handleNewTodoTitleChange(title: string) {
@@ -91,7 +97,6 @@ class TodoStore {
 
   completeTodo(todo: Todo) {
     todo.completed = !todo.completed;
-    this.unfilteredList = [...this.todos];
   }
 
   putOnDetailedView(todo: Todo) {
@@ -100,37 +105,35 @@ class TodoStore {
         ? (element = { ...element, isDetailed: !element.isDetailed })
         : (element = { ...element, isDetailed: false })
     );
-    this.unfilteredList = [...this.todos];
   }
 
+  //For downloading some todos for demonstration
   loadTodos() {
     fetch("https://jsonplaceholder.typicode.com/todos")
       .then((res) => res.json())
       .then((res: Todo[]) => {
         res.slice(0, 3).forEach((todo: Todo) => {
+          todo.isDisplayed = true;
           todo.description =
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam velit deleniti provident mollitia sint eligendi impedit.Cum illum suscipit sit, ipsam delectus necessitatibus tenetur doloribus totam facere porro, dolore vel";
           action(() => {
             store.todos.push(todo);
           })();
         });
-      })
-      .then(() => {
-        this.unfilteredList = [...this.todos];
       });
   }
 
-  resetFilter() {
-    this.todos = [...this.unfilteredList];
-  }
-
-  filterList(filterParameter: string) {
-    if (filterParameter === "option1") {
-      this.todos = filterList(this.todos, true);
-    } else if (filterParameter === "option2") {
-      this.todos = filterList(this.todos, false);
+  filterList() {
+    const filterValue = uiStore.filterSelection;
+    if (filterValue === "Completed") {
+      this.todos = handleFilterList(this.todos, true);
+    } else if (filterValue === "Incompleted") {
+      this.todos = handleFilterList(this.todos, false);
     } else {
-      this.resetFilter();
+      this.todos.map((todo) => {
+        todo.isDisplayed = true;
+        return todo;
+      });
     }
   }
 }
