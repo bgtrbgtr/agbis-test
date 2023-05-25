@@ -7,6 +7,8 @@ import TodoItem from "./TodoItem";
 import Modal from "./Modal";
 import TodoCounter from "./TodoCounter";
 import EditTodo from "./EditTodo";
+import DetailedView from "./DetailedView";
+import FilterSelect from "./FilterSelect";
 
 export {
   AddTodo,
@@ -18,4 +20,6 @@ export {
   Modal,
   TodoCounter,
   EditTodo,
+  DetailedView,
+  FilterSelect,
 };

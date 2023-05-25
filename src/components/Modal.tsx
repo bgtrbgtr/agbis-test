@@ -1,3 +1,4 @@
+import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import store from "../stores/TodoStore.ts";
 import uiStore from "../stores/UIStore.ts";
@@ -28,7 +29,11 @@ const Modal = () => {
                 placeholder="Title"
                 value={todoInEdit.title}
                 onChange={(e) =>
-                  todoInEdit ? (todoInEdit.title = e.target.value) : null
+                  todoInEdit
+                    ? action(() => {
+                        todoInEdit.title = e.target.value;
+                      })()
+                    : null
                 }
                 className="mb-2 rounded-md p-1 text-sm outline-none placeholder:font-thin placeholder:text-gray-600"
               ></input>
@@ -37,7 +42,11 @@ const Modal = () => {
                 placeholder="Brief description"
                 value={todoInEdit.description}
                 onChange={(e) =>
-                  todoInEdit ? (todoInEdit.description = e.target.value) : null
+                  todoInEdit
+                    ? action(() => {
+                        todoInEdit.description = e.target.value;
+                      })()
+                    : null
                 }
                 className="mb-3 h-3/5 resize-none overflow-y-auto whitespace-pre-wrap break-words rounded-md p-1 text-sm outline-none placeholder:font-thin placeholder:text-gray-600"
               ></textarea>

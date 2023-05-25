@@ -11,13 +11,13 @@ const AddTodo = () => {
     event.target.style.height = "auto";
     event.target.style.height =
       Math.min(
-        event.target.scrollHeight - 14,
+        event.target.scrollHeight - 20,
         5 * parseInt(getComputedStyle(event.target).lineHeight)
       ) + "px";
   };
 
   return (
-    <>
+    <div className="fixed bottom-4 left-10 right-10">
       <form
         name="AddNewTodo"
         className="flex justify-between gap-2 rounded-md bg-gray-200/75 p-2"
@@ -58,12 +58,10 @@ const AddTodo = () => {
           Add new task
         </button>
       </form>
-      {uiStore.errorMessage ? (
-        <span className="duration 2000 ml-3 animate-pulse font-black text-rose-600 opacity-0 transition-opacity ease-out">
-          {uiStore.errorMessage}
-        </span>
-      ) : null}
-    </>
+      <span className="duration 2000 ml-3 animate-pulse font-black text-rose-600 opacity-0 transition-opacity ease-out">
+        {uiStore.errorMessage}
+      </span>
+    </div>
   );
 };
 
