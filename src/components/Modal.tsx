@@ -11,11 +11,11 @@ const Modal = () => {
   return (
     <>
       {uiStore.isModalOpen ? (
-        <div className="absolute left-0 top-0 z-10 h-full w-full bg-black/50">
+        <div className="fixed left-0 top-0 z-10 h-full w-full bg-black/50">
           <div className="flex h-full items-center">
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="mx-auto my-auto flex h-[400px] w-10/12 flex-col rounded-md bg-gray-200 p-3 md:w-8/12 lg:w-8/12"
+              className="mx-auto my-auto flex h-4/6 w-10/12 flex-col rounded-md bg-gray-200 p-3 md:w-8/12 lg:w-8/12"
             >
               <button
                 className="ml-auto w-5"
