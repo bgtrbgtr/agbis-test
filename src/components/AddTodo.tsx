@@ -35,6 +35,7 @@ const AddTodo = () => {
           className="rounded-md p-1 align-top text-sm outline-none placeholder:font-thin placeholder:text-gray-600 sm:w-3/12"
         ></input>
         <textarea
+          id="textarea"
           placeholder={`${loclzStore.setTranslation(
             "placeholders.newDescription"
           )}`}
@@ -50,6 +51,7 @@ const AddTodo = () => {
           aria-label={`${loclzStore.setTranslation("ariaLabels.addNewTodo")}`}
           className="mx-auto rounded-md bg-white p-2 text-xs font-light hover:bg-blue-600 hover:text-white active:bg-blue-700 sm:w-3/12"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            const textarea = document.querySelector("#textarea");
             try {
               e.preventDefault();
               // Sort of validation for title-input
@@ -59,6 +61,8 @@ const AddTodo = () => {
                 );
               }
               store.addTodo();
+              // Return textarea height to default value in case it was increased by input
+              textarea?.setAttribute("style", "height: 40px");
             } catch (e) {
               const error = e as ValidationError;
               uiStore.setErrorMessage(error.message);
