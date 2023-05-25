@@ -2,6 +2,8 @@ import { observer } from "mobx-react-lite";
 import { Todo } from "../stores/TodoStore.ts";
 import store from "../stores/TodoStore.ts";
 import loclzStore from "../stores/LocalizationStore.ts";
+import incompleteImgUrl from "../assets/incomplete.svg";
+import completeImgUrl from "../assets/complete.svg";
 
 interface CompleteTodoProps {
   todo: Todo;
@@ -20,11 +22,7 @@ const CompleteTodo = (props: CompleteTodoProps) => {
     >
       <img
         className="h-5 w-5"
-        src={
-          props.todo.completed
-            ? "/src/assets/incomplete.svg"
-            : "/src/assets/complete.svg"
-        }
+        src={props.todo.completed ? `${incompleteImgUrl}` : `${completeImgUrl}`}
       />
     </button>
   );

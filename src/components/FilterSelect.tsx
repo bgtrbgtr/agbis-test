@@ -2,6 +2,7 @@ import store from "../stores/TodoStore";
 import uiStore from "../stores/UIStore";
 import { observer } from "mobx-react-lite";
 import loclzStore from "../stores/LocalizationStore";
+import arrowImgUrl from "../assets/arrow.svg";
 
 const FilterSelect = () => {
   return (
@@ -25,7 +26,7 @@ const FilterSelect = () => {
         )}`}</option>
       </select>
       <div className="pointer-events-none absolute right-1 top-3 flex items-center px-2 hover:cursor-pointer">
-        <img className="self-middle h-4 w-4" src="src/assets/arrow.svg" />
+        <img className="self-middle h-4 w-4" src={arrowImgUrl} />
       </div>
     </div>
   );

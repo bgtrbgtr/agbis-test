@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import store from "../stores/TodoStore.ts";
 import uiStore from "../stores/UIStore.ts";
 import loclzStore from "../stores/LocalizationStore.ts";
+import closeImgUrl from "../assets/close.svg";
 
 const Modal = () => {
   const todoInEdit = store.todoInEdit;
@@ -26,7 +27,7 @@ const Modal = () => {
                   uiStore.openModal();
                 }}
               >
-                <img className="h-5 w-5" src="/src/assets/close.svg"></img>
+                <img className="h-5 w-5" src={closeImgUrl}></img>
               </button>
               <label className="text font-light">{`${loclzStore.setTranslation(
                 "labels.inputTitle"

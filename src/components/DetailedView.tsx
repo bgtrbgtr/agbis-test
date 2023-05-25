@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import store, { Todo } from "../stores/TodoStore";
 import loclzStore from "../stores/LocalizationStore";
+import closeImgUrl from "../assets/close.svg";
 
 // Component let user to view full details on todo-item
 const DetailView = () => {
@@ -17,10 +18,7 @@ const DetailView = () => {
           )}`}
           onClick={() => store.putOnDetailedView(todo)}
         >
-          <img
-            className="absolute right-0 top-0 h-6 w-6"
-            src="/src/assets/close.svg"
-          />
+          <img className="absolute right-0 top-0 h-6 w-6" src={closeImgUrl} />
         </button>
         <h2 className="mb-3 break-words font-bold underline md:text-2xl lg:text-5xl">
           {todo.title}

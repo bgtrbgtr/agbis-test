@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import store, { Todo } from "../stores/TodoStore.ts";
 import loclzStore from "../stores/LocalizationStore.ts";
+import editImgUrl from "../assets/edit.svg";
 
 interface EditTodoProps {
   todo: Todo;
@@ -14,7 +15,7 @@ const EditTodo = (props: EditTodoProps) => {
       className="h-8 w-8 rounded-full bg-white p-1.5 hover:bg-blue-300 active:bg-blue-400"
       onClick={() => store.editTodo(props.todo)}
     >
-      <img className="h-4 w-5" src="/src/assets/edit.svg" />
+      <img className="h-4 w-5" src={`${editImgUrl}`} />
     </button>
   );
 };
